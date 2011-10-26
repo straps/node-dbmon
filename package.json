@@ -1,5 +1,5 @@
 { "name": "dbmon",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Database Monitor Utilities for Real Time Apps",
   "keywords" : ["dbmon", "monitoring", "postgresql", "mysql", "oracle", "polling", "rdbms"],
   "author": "Strx <f@strx.it>",

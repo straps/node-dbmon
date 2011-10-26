@@ -1,3 +1,8 @@
+1.0.3 / 2011-10-26
+==================
+  * Added the filesystem driver and the inotifywait method; filesystem database emulation to have real-time file change notification using inotifywait child_process
+  * Test bugfix and refactoring
+
 1.0.2 / 2011-10-25
 ==================
 

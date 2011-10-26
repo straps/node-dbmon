@@ -1,5 +1,6 @@
-# Database monitor utilities for nodejs
-If you are trying to update a GUI when a database table changes (_insert_, _update_, _delete_), this library is for you.
+# Database and Filesystem monitor utilities for nodejs
+
+If you are trying to update a GUI when a database table changes (_insert_, _update_, _delete_) or when a file is being created/modified/deleted/moved, this library is for you.
 
 This is a node.js module supporting a growing number of database drivers and notification transports
 you can extend and improve.
@@ -7,9 +8,10 @@ you can extend and improve.
 It is designed to be easily extended with simple sintax by anyone and, where possibile,
 to notify of changes without classic polling, but with real-time notification mechanism
 
+
 ## Usage sample
-As of today, there is only one driver developed, the PostgreSQL one because I'm a PostgreSQL fan and heavy user.
-This is a short example; you can find more on `test/test-postgresql.js`
+
+This is a short example of the PostgreSQL driver; you can find more on `test/test-postgresql.js`
 
 Install a local postgresql database server; grant temporary trust access to the postgresql
 user editing the pg_hba.conf file and create a test table like this `create table testtable(id integer primary key, val varchar(10));`
@@ -60,6 +62,24 @@ it really real-time, not like other polling-based alternatives.
 To see the complete list of options see [lib/channelDefaults.js](https://github.com/straps/node-dbmon/blob/master/lib/channelDefaults.js)
 
 
+### Sample for the new filesystem driver
+
+On linux, you can experiment the new `filesystem` driver. It is based on `inotifywait`, a linux command line utility
+that helps you monitor for file changes; on ubuntu you can install it by typing
+
+    sudo apt-get install inotify-tools
+
+Now Execute this code
+
+    require('dbmon').channel({
+      driver:'filesystem',
+      driverOpts:{filesystem:{root:'/home'}},
+      method:'inotifywait',
+      transports:'console'
+    });
+
+and monitor the console when you create/modify/delete files on your home directory or subdirectories (Desktop too). FUN
+
 ## Structure and Naming Conventions
 
 Dbmon is designed to be dynamic and easily extensible; there are 3 main actors to extend it
@@ -69,11 +89,11 @@ Dbmon is designed to be dynamic and easily extensible; there are 3 main actors t
   - **methods**, in [lib/providers](https://github.com/straps/node-dbmon/tree/master/lib/methods), are the core of the system; their implementation depends upon the driver and the method specified in the configuration object and their name should respect `DRIVER-METHOD-method.js` convention (ie: postgresql-trigger-method.js). Methods init function return an `EventEmitter` inherited object that notify listeners where data changes firing the event notification chain
 
 
-### How Create a new Transport
+### How To Create a new Transport
 
-Creating a new transport is very easy; the node module have to export a single function `init` that `dbmon` will call passing the global options object.
+Creating a new transport is very simple; the node module have to export a single function `init` that `dbmon` will call passing the global options object.
 
-The `init` function have to return an object with a `notify` method, magically called from drivers, when something server side changed.
+The `init` function have to return an object with a `notify` method, magically called from drivers, when something server side changes.
 
 Say we want a generic TCP Socket transport to communicate with another application, transmitting db update notification.
 
@@ -128,10 +148,10 @@ Now use it from your node.js server socket app:
       });
     });
 
-In 10 lines of code you can create and use a new tranport, contribute to the library and make others happy (me too :)
+In 20 lines of (uncompressed) code you can create and use a new tranport, contribute to the library and make others happy (me too :)
 
 Creating a new driver and a new driver method, could be some more complicated, but I thing, in next releases will be a generic
-mixed trigger/polloging based driver I'm thinking on.
+mixed trigger/polling based driver I'm thinking on.
 
 
 ## Testing
@@ -159,7 +179,7 @@ Database drivers, depends on the driver you use, including
 
   - [Pg](https://github.com/brianc/node-postgres) (`npm install pg`)
 
-Only for test purposes
+Only for test
 
   - [Colors](https://github.com/Marak/colors.js) (`npm install colors`)
 
@@ -168,6 +188,7 @@ Only for test purposes
 ## ToDo
   - Develop other drivers (MySQL, Oracle, MsSQL, etc...)
   - Develop other transports (Faye, Hook.io, etc..)
+  - Write better tests with a single connection, command line parameters and one file per driver/method/transport
 
 
 ## License
