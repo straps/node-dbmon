@@ -14,6 +14,7 @@ try {
   fs.mkdirSync(dir, '777');
 }catch(e){}
 
+
 var channel=dbmon.channel({
   driver:'filesystem',
   driverOpts:{
@@ -22,21 +23,20 @@ var channel=dbmon.channel({
     }
   },
   method:'inotifywait',
-  transports:'eventEmitter',
+  transports:'faye',
   transportsOpts:{
-    eventEmitter:{
-      eventEmitter:eventEmitter
+    faye:{
+      channel:'/dbmon'
     }
   }
 });
 
-//EventEmitter events for filesystem are very similar to database ones, exept for the truncate (obv..)
-_.each(['insert', 'update', 'delete'], function(op){
-  eventEmitter.on(op, function(row){
-    utils.clogok('EventEmitter on '+op+' called OK, row='+JSON.stringify(row));
-    notifications++;
-  });
+//Subscribing from server
+channel.transports[0].bayeux.getClient().subscribe('/dbmon', function(row){
+  notifications++;
+  console.log('on channel /dbmon, row='+JSON.stringify(row));
 });
+
 
 setTimeout(function(){
   console.log('Creating '+path);
@@ -50,6 +50,8 @@ setTimeout(function(){
     utils.assertclog(notifications===3, 'Everything is OK', 'Theres Something Wrong, emitted notifications='+notifications);
 
     channel.stop();
+    process.exit(0);
+
   }, 100);
 
 }, 500);

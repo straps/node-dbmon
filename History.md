@@ -1,3 +1,10 @@
+1.0.4 / 2011-10-27
+==================
+  * Added Faye transport for notifying real-time changes via websocket
+  * Tests improvements via Makefile (make test)
+  * Readme updated
+  * General bugfix and improvements
+
 1.0.3 / 2011-10-26
 ==================
   * Added the filesystem driver and the inotifywait method; filesystem database emulation to have real-time file change notification using inotifywait child_process

@@ -31,7 +31,7 @@ Step(
           cli:pgcli
         }
       },
-      transports: 'console,eventEmitter',
+      transports: 'eventEmitter',
       transportsOpts:{
         eventEmitter:{
           eventEmitter:eventEmitter

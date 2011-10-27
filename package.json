@@ -1,11 +1,12 @@
 { "name": "dbmon",
-  "version": "1.0.3",
-  "description": "Database Monitor Utilities for Real Time Apps",
-  "keywords" : ["dbmon", "monitoring", "postgresql", "mysql", "oracle", "polling", "rdbms"],
+  "version": "1.0.4",
+  "description": "Database and Filesystem Monitor Utilities for Real Time Apps",
+  "keywords" : ["dbmon", "monitoring", "postgresql", "mysql", "oracle", "polling", "rdbms", "faye"],
   "author": "Strx <f@strx.it>",
   "main": "./index.js",
   "dependencies": {
-    "pg":           ">= 0.6.2",
+    "pg":           ">= 0.6.0",
+    "faye":         ">= 0.6.5",
     "step":         ">= 0.0.4",
     "underscore":   ">= 1.2.0"
   },
@@ -18,6 +19,6 @@
     "url" :   "git://github.com/straps/node-dbmon.git"
   },
   "scripts" : {
-    "test" : "node test/test-*"
+    "test" : "make test"
   }
 }

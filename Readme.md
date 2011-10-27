@@ -158,7 +158,7 @@ mixed trigger/polling based driver I'm thinking on.
 
 Test cases are home-made and could not be complete or well done, so feel free to fork and improve tests too.
 
-In any case, you can test the library doing a `node test/test-*` from main directory
+In any case, you can test the library doing a `make test` from main directory
 
 
 ## Installation
