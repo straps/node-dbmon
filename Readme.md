@@ -84,9 +84,9 @@ and monitor the console when you create/modify/delete files on your home directo
 
 Dbmon is designed to be dynamic and easily extensible; there are 3 main actors to extend it
 
-  - **transports**, in [lib/providers](https://github.com/straps/node-dbmon/tree/master/lib/transports) are the way dbmon notify events. You can use how many tranports you want separating them by comma. The name specified in the options object have to match the name of the file followed by `-tranport.js` in the `transports` foler, like the `console` transport in the example above.
+  - **transports**, in [lib/transports](https://github.com/straps/node-dbmon/tree/master/lib/transports) are the way dbmon notify events. You can use how many tranports you want separating them by comma. The name specified in the options object have to match the name of the file followed by `-tranport.js` in the `transports` foler, like the `console` transport in the example above.
   - **providers**, in [lib/providers](https://github.com/straps/node-dbmon/tree/master/lib/providers), have to initialize their method to fetch data and notify transports whene something happen; in most cases (surely for postgresql case) they should only require the `generic-driver` that dynamiccaly instantiate the method and notify transports
-  - **methods**, in [lib/providers](https://github.com/straps/node-dbmon/tree/master/lib/methods), are the core of the system; their implementation depends upon the driver and the method specified in the configuration object and their name should respect `DRIVER-METHOD-method.js` convention (ie: postgresql-trigger-method.js). Methods init function return an `EventEmitter` inherited object that notify listeners where data changes firing the event notification chain
+  - **methods**, in [lib/methods](https://github.com/straps/node-dbmon/tree/master/lib/methods), are the core of the system; their implementation depends upon the driver and the method specified in the configuration object and their name should respect `DRIVER-METHOD-method.js` convention (ie: postgresql-trigger-method.js). Methods init function return an `EventEmitter` inherited object that notify listeners where data changes firing the event notification chain
 
 
 ### How To Create a new Transport
