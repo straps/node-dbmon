@@ -1,12 +1,13 @@
 { "name": "dbmon",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Database and Filesystem Monitor Utilities for Real Time Apps",
-  "keywords" : ["dbmon", "monitoring", "postgresql", "mysql", "oracle", "polling", "rdbms", "faye"],
+  "keywords" : ["dbmon", "monitoring", "postgresql", "mysql", "oracle", "polling", "rdbms", "faye", "nowjs"],
   "author": "Strx <f@strx.it>",
   "main": "./index.js",
   "dependencies": {
     "pg":           ">= 0.6.0",
     "faye":         ">= 0.6.5",
+    "now":         ">= 0.6.5",
     "step":         ">= 0.0.4",
     "underscore":   ">= 1.2.0"
   },

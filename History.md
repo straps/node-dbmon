@@ -1,3 +1,8 @@
+1.0.5 / 2011-11-05
+==================
+  * Added Nowjs transport for notifying real-time changes directly to browser clients very very easily
+  * For the nowjs transport, the `fn` option can be an underscore template string that will be compiled at runtime with the row returned to the client; example opts: `{transports:'nowjs',transportsOpts:{nowjs:{fn:'onChangeKey<%= k %>'}}}`; k will be the row key when the event occur
+
 1.0.4 / 2011-10-27
 ==================
   * Added Faye transport for notifying real-time changes via websocket

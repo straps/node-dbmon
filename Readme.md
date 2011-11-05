@@ -178,6 +178,12 @@ Or you can download/fork and copy on a local folder inside your project
 Database drivers, depends on the driver you use, including
 
   - [Pg](https://github.com/brianc/node-postgres) (`npm install pg`)
+  - [inotifywait](https://github.com/rvoicilas/inotify-tools/wiki/) (`sudo apt-get install inotify-tools`); required for `{driver:'filesystem',method:'inotifywait',...}`
+
+Transports drivers, depends on the transports you use, including
+
+  - [Faye](http://faye.jcoglan.com/) (`npm install faye`)
+  - [Nowjs](http://nowjs.com/) (`npm install now`)
 
 Only for test
 
