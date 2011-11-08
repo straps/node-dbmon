@@ -6,7 +6,7 @@ utils.clogok('**********************').clogok('Starting Postgresql driver test, 
 
 var pgcli=utils.pg.getCli();
 
-var notifications=0;
+var notifications=0, dbmonChannel;
 Step(
   function createTempTable(){
     utils.clogok('Creating Temp Table');
@@ -22,7 +22,7 @@ Step(
 
     var eventEmitter=new events.EventEmitter();
 
-    var ch1=dbmon.channel({
+    dbmonChannel=dbmon.channel({
       driver:'postgresql', monitor: 'insert,update,delete,truncate', method: 'trigger',
       table:'dbmontmp',
       keyfld: { name:'i', type:'integer' },
@@ -64,8 +64,10 @@ Step(
   function tearDown(){
     assert.ok(notifications===3, ('notifications='+notifications+', should be 3').red);
     utils.clogok('Disconnecting, everything is ok');
-    pgcli.query('drop table dbmontmp cascade', function(){
-      utils.pg.end();
+    dbmonChannel.stop(function(){
+      pgcli.query('drop table dbmontmp cascade', function(){
+        utils.pg.end();
+      });
     });
   }
 );

@@ -1,3 +1,9 @@
+1.0.6 / 2011-11-08
+==================
+  * Added `cond` parameter that lets generate events only when the SQL condition is true. It's usage is deferred to driver methods; for postgresql, you can pass a SQL condition referring to NEW or OLD records inside trigger function. `cond` is evaluated ad an `underscore` template  at runtime passing an object with a rec property that can be NEW (for insert and update) or OLD (for delete). Example usage, valid for insert/update/delete: `cond:"<%= rec %>.name='YOUR NAME'"`
+  * Added `channel.stop(callaback)` support, deferred to method.stop implementation. PostgreSQL detroy triggers, trigger functions and history tables if stop is called
+  * `channel.stop()` test integration
+
 1.0.5 / 2011-11-05
 ==================
   * Added Nowjs transport for notifying real-time changes directly to browser clients very very easily
