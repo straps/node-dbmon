@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/straps/node-dbmon.png)](http://travis-ci.org/straps/node-dbmon)
 # Database and Filesystem monitor utilities for nodejs
 
 If you are trying to update a GUI when a database table changes (_insert_, _update_, _delete_) or when a file is being created/modified/deleted/moved, this library is for you.
