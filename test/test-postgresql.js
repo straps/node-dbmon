@@ -18,7 +18,7 @@ Step(
   },
   function theFunPart(err){
     utils.chkerr(err).clogok('The Fun Part');
-    var toTearDown=this;
+    var i, toTearDown=this;
 
     var eventEmitter=new events.EventEmitter();
 
@@ -36,7 +36,8 @@ Step(
         eventEmitter:{
           eventEmitter:eventEmitter
         }
-      }
+      },
+      debouncedNotifications:0
     });
 
     _.each(['insert', 'update', 'delete', 'truncate'], function(op){
@@ -58,13 +59,54 @@ Step(
       pgcli.query('delete from dbmontmp where i=0');
     }, 500);
 
+
+    for (i=100; i<200; i++){
+      setTimeout(function(x){
+          // console.log('insert '+x);
+          pgcli.query('insert into dbmontmp values ('+x+', \''+x+'\')', function(){});
+      }, 500+(i*2/10), i);
+    }
+
+    //Huge query test
+    setTimeout(function(){
+      var q=[];
+      for (i=200; i<300; i++){
+        q.push('insert into dbmontmp values ('+i+', \''+i+'\')');
+      }
+      pgcli.query(q.join(';'), function(){});
+    }, 800);
+
+    for (i=0; i<50; i++){
+      setTimeout(function(x){
+        pgcli.query('insert into dbmontmp values ('+(x+1000)+', \''+(x+1000)+'\')', function(){});
+      }, 500+i*100, i);
+    }
+
+    for (i=0; i<50; i++){
+      setTimeout(function(x){
+        pgcli.query('insert into dbmontmp values ('+(x+2000)+', \''+(x+2000)+'\')', function(){});
+      }, 550+i*100, i);
+    }
+
+    for (i=0; i<50; i++){
+      setTimeout(function(x){
+        pgcli.query('insert into dbmontmp values ('+(x+3000)+', \''+(x+3000)+'\')', function(){});
+      }, 300+i*110, i);
+    }
+
+    for (i=0; i<50; i++){
+      setTimeout(function(x){
+        pgcli.query('insert into dbmontmp values ('+(x+4000)+', \''+(x+4000)+'\')', function(){});
+      }, 300+i*120, i);
+    }
+
     //Stop
-    setTimeout(toTearDown, 1000);
+    setTimeout(toTearDown, 7000);
   },
   function tearDown(){
-    assert.ok(notifications===3, ('notifications='+notifications+', should be 3').red);
-    utils.clogok('Disconnecting, everything is ok');
+    utils.clogok('Everything is ok');
     dbmonChannel.stop(function(){
+      assert.ok(notifications===403, ('notifications='+notifications+', should be 403').red);
       pgcli.query('drop table dbmontmp cascade', function(){
         utils.pg.end();
       });

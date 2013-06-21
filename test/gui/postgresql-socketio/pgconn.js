@@ -1,0 +1,1 @@
+module.exports = 'tcp://postgres:HMtrs9hY@127.0.0.1/andon';

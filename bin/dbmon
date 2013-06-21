@@ -1,0 +1,50 @@
+#!/usr/bin/env node
+
+//Run a dbmon process on the fly converting parameters to a JSON Object similar to ../lib/channelDefaults.js
+var dbmon = require('../'),
+    argv = require('optimist').argv,
+    _=require('underscore')._,
+    clog=function(x){ console.log(x); },
+    cdir=function(x){ console.dir(x); };
+
+//convert arguments to dbmon config object, ex:
+// --driver=postgres ==> { driver: 'postgresql' }
+var argv2Obj=function(argv){
+  var rv={};
+  _.each(argv,function(v,k){
+    var subKeys=k.split('-'), subObject=rv, subKey;
+    while (subKeys.length){
+      subKey=subKeys.splice(0,1);
+      subObject[subKey] = subObject[subKey] || {};
+      if (subKeys.length){
+        subObject=subObject[subKey];
+      }
+    }
+    subObject[subKey]=v;
+  });
+  return rv;
+};
+
+if (process.argv.length>2){
+  //convert arguments to object
+  var channelOpts=argv2Obj(_.omit(argv,'_','$0'));
+
+  clog("Starting dbmon, channelOpts=\n"+JSON.stringify(channelOpts, null, 2));
+
+  var channel=dbmon.channel(channelOpts);
+
+  var onExitSignal=function(){
+    channel.stop(function(){
+      process.exit(0);
+    });
+  };
+
+  process.on('SIGINT', onExitSignal);
+  process.on('SIGTERM', onExitSignal);
+
+}else{
+  clog('Usage: '+process.argv[0]+' '+process.argv[1]+' [arguments...]');
+  clog('  [arguments...] will be converted to json, ie: ');
+  clog('  --driver=postgresql --driverOpts-postgresql-connStr=tcp://user:pwd@ip:port/db ==> {driver:\'postgresql\', driverOpts:{postgresql:{connStr:\'tcp://user:pwd@ip:port/db\'}}}');
+  clog('Dbmon Specs on ../lib/channelDefaults.js');
+}

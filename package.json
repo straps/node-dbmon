@@ -1,7 +1,7 @@
 { "name": "dbmon",
-  "version": "1.0.7",
+  "version": "1.1.0",
   "description": "Database and Filesystem Monitor Utilities for Real Time Apps",
-  "keywords" : ["dbmon", "monitoring", "postgresql", "mysql", "oracle", "polling", "rdbms", "faye", "nowjs"],
+  "keywords" : ["dbmon", "monitoring", "postgresql", "mysql", "oracle", "polling", "rdbms", "faye", "nowjs", "realtime"],
   "author": "Strx <f@strx.it>",
   "main": "./index.js",
   "dependencies": {
@@ -9,7 +9,8 @@
     "faye":         ">= 0.6.5",
     "now":         ">= 0.6.5",
     "step":         ">= 0.0.4",
-    "underscore":   ">= 1.2.0"
+    "underscore":   ">= 1.2.0",
+    "optimist":     ">= 0.0.0"
   },
   "devDependencies": {
     "colors":       ">= 0.5.1"
@@ -21,5 +22,11 @@
   },
   "scripts" : {
     "test" : "make test"
+  },
+  "bin": {
+    "dbmon": "./bin/dbmon"
+  },
+  "engines": {
+    "node": "*"
   }
 }

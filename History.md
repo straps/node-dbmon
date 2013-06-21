@@ -1,3 +1,8 @@
+1.1.0 / 2013-06-21
+==================
+  * dbmon cli lets you monitor tables from command line, without writing a single line of JS code
+  * added postgresql polling method; uses triggers but not notify/listen
+
 1.0.7 / 2012-01-14
 ==================
   * addlflds option added, see channelDefaults.js for an example usage

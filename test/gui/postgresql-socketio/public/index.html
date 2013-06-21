@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+
+<html>
+  <head>
+    <style type="text/css">
+      body { font-family: sans-serif; font-size:9px; }
+      .dot { position:absolute; border-radius:30px; width:30px; height:30px; line-height:30px; border: 1px solid #ccc; text-align:center; vertical-align:middle; opacity:.8; font-weight: bold; }
+    </style>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      function rndcolor() {
+        var letters = '56789ABCD'.split('');
+        var color = '#';
+        for (var i = 0; i < 6; i++ ) {
+          color += letters[~~(Math.random() * letters.length)];
+        }
+        return color;
+      }
+
+      var socket = io.connect('http://'+location.host);
+      socket.on('dbmonNotify', function (data) {
+        var el;
+        if (data.op==='i'){
+          el='<div class="dot" id="dot-'+data.k+'" style="top:'+data.y+'px; left:'+data.x+'px; background-color:'+rndcolor()+';">'+data.k+'</div>';
+          console.log(el);
+          document.body.innerHTML+=el;
+        }else if (data.op==='d'){
+          el = document.getElementById('dot-'+data.k);
+          el && el.parentNode.removeChild(el);
+        }
+        console.log(data);
+      });
+    </script>
+  </head>
+
+  <body>
+  </body>
+</html>

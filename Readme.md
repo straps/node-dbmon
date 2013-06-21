@@ -61,6 +61,43 @@ it really real-time, not like other polling-based alternatives.
 
 To see the complete list of options see [lib/channelDefaults.js](https://github.com/straps/node-dbmon/blob/master/lib/channelDefaults.js)
 
+### Dbmon cli
+
+Dbmon has also an executable called `dbmon`.
+
+With it you can start a socket.io server or a console db monitoring program without writing a single line of code.
+
+Sample usage:
+
+    dbmon --driver=postgresql --driverOpts-postgresql-connStr=tcp://user:pwd@127.0.0.1:5432/db --driverOpts-postgresql-baseObjectsName=test_dbmon_cli --table=mytable --keyfld-name=id --keyfld-type=integer --transports=console,socketio --transportsOpts-socketio-port=8888
+
+Parameters are tranformed to a JSON object as expected by dbmon and like discussed before.
+
+In this case, the resulting json will be:
+
+    {
+      "driver": "postgresql",
+      "driverOpts": {
+        "postgresql": {
+          "connStr": "tcp://user:pwd@127.0.0.1:5432/db",
+          "baseObjectsName": "test_dbmon_cli"
+        }
+      },
+      "table": "mytable",
+      "keyfld": {
+        "name": "id",
+        "type": "integer"
+      },
+      "transports": "console,socketio",
+      "transportsOpts": {
+        "socketio": {
+          "port": 8888
+        }
+      }
+    }
+
+dbmon will start a channel passing that object as input, will monitor for *mytable* changes and will run a socket.io websocket on port 8888 for real-time web updates. Simple as effective...
+
 
 ### Sample for the new filesystem driver
 
