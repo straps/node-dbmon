@@ -238,7 +238,7 @@ Only for test
 
 (The MIT License)
 
-Copyright (c) 2011 Francesco Strappini <f@strx.it>
+Copyright (c) 2011 Francesco Strappini <fstraps@gmail.com>
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
